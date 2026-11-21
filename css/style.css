@@ -1,0 +1,683 @@
+/* =========================================================
+   Lost & Found FILKOM — Exact Figma High-Fidelity Stylesheet
+   ========================================================= */
+
+:root {
+  --lf-sky: #8ebae0;
+  --lf-sky-light: #b8d3eb;
+  --lf-hero-bg: #eef6fd;
+  --lf-pill-blue-bg: #dcecf9;
+  --lf-blue: #0088ff;
+  --lf-blue-hover: #0070d6;
+  --lf-blue-text: #0070d2;
+  --lf-orange: #ff7a00;
+  --lf-yellow: #ffd60a;
+  --lf-green: #2acd5b;
+  --lf-green-hover: #22b34e;
+  --lf-coral: #e97171;
+  --lf-coral-hover: #dc5b5b;
+  --lf-dark-red: #a51616;
+  --lf-dark-ub: #29394b;
+  --lf-border: #b8b8b8;
+  --lf-border-soft: #d9dee3;
+  --lf-text: #1c1c1c;
+  --lf-muted: #6b7280;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background-color: #ffffff;
+  color: var(--lf-text);
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---------- Brand Logo (Lost & Found FILKOM) ---------- */
+.lf-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: 'Anton', Impact, 'Arial Narrow', sans-serif;
+  font-size: 1.55rem;
+  letter-spacing: 0.01em;
+  color: #000000;
+  text-decoration: none;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.lf-brand:hover {
+  color: #000000;
+}
+
+.lf-brand-fil {
+  color: var(--lf-blue);
+}
+
+.lf-brand-kom {
+  color: var(--lf-orange);
+}
+
+/* ---------- Top Navbar ---------- */
+#app-navbar {
+  border-bottom: 1px solid #d9d9d9;
+  min-height: 78px;
+  z-index: 1030;
+}
+
+.lf-nav-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.45rem 1.05rem;
+  border-radius: 9px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #111111;
+  background-color: #ffffff;
+  border: 1px solid #9a9a9a;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.lf-nav-btn:hover {
+  background-color: #f3f7fb;
+  color: #111111;
+}
+
+.lf-nav-btn.active {
+  background-color: #79addc;
+  border-color: #79addc;
+  color: #ffffff;
+}
+
+.lf-role-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.3rem 1.15rem;
+  border-radius: 999px;
+  border: 1px solid #8c8c8c;
+  background-color: #ffffff;
+  color: #111111;
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.lf-avatar-circle {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid #8c8c8c;
+  background-color: #ffffff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.78rem;
+  color: #555;
+}
+
+/* ---------- Buttons matching Figma ---------- */
+.lf-btn-blue {
+  background-color: var(--lf-blue);
+  border: 1px solid var(--lf-blue);
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 0.9rem;
+  border-radius: 8px;
+  padding: 0.58rem 1.25rem;
+}
+
+.lf-btn-blue:hover,
+.lf-btn-blue:focus {
+  background-color: var(--lf-blue-hover);
+  border-color: var(--lf-blue-hover);
+  color: #ffffff;
+}
+
+.lf-btn-blue-outline {
+  background-color: #ffffff;
+  border: 1px solid #8ebae0;
+  color: var(--lf-blue-text);
+  font-weight: 600;
+  font-size: 0.9rem;
+  border-radius: 8px;
+  padding: 0.58rem 1.25rem;
+}
+
+.lf-btn-blue-outline:hover {
+  background-color: #f0f7fd;
+  color: var(--lf-blue-text);
+}
+
+.lf-btn-white {
+  background-color: #ffffff;
+  border: 1px solid #9a9a9a;
+  color: #1c1c1c;
+  font-weight: 600;
+  font-size: 0.88rem;
+  border-radius: 8px;
+  padding: 0.52rem 1.2rem;
+}
+
+.lf-btn-white:hover {
+  background-color: #f5f5f5;
+  color: #1c1c1c;
+}
+
+.lf-btn-green {
+  background-color: var(--lf-green);
+  border: 1px solid var(--lf-green);
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 0.9rem;
+  border-radius: 8px;
+  padding: 0.58rem 1.25rem;
+}
+
+.lf-btn-green:hover {
+  background-color: var(--lf-green-hover);
+  border-color: var(--lf-green-hover);
+  color: #ffffff;
+}
+
+.lf-btn-coral {
+  background-color: var(--lf-coral);
+  border: 1px solid var(--lf-coral);
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 0.88rem;
+  border-radius: 8px;
+  padding: 0.55rem 1.25rem;
+}
+
+.lf-btn-coral:hover {
+  background-color: var(--lf-coral-hover);
+  border-color: var(--lf-coral-hover);
+  color: #ffffff;
+}
+
+.lf-btn-ub {
+  background-color: var(--lf-dark-ub);
+  border: 1px solid var(--lf-dark-ub);
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 0.9rem;
+  border-radius: 8px;
+  padding: 0.62rem 1.25rem;
+}
+
+.lf-btn-ub:hover {
+  background-color: #1d2a38;
+  color: #ffffff;
+}
+
+/* ---------- Signature Sky-Blue Panel ---------- */
+.lf-sky-panel {
+  background-color: var(--lf-sky);
+  border-radius: 12px;
+  color: #ffffff;
+}
+
+.lf-sky-panel-faded {
+  background-color: #c2d9ee;
+  border-radius: 12px;
+  color: #ffffff;
+}
+
+.lf-sky-divider {
+  border: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.72);
+  opacity: 1;
+  margin: 0.85rem 0;
+}
+
+/* ---------- Landing Page (00) ---------- */
+.lf-hero-section {
+  background-color: var(--lf-hero-bg);
+  padding: 4.5rem 0;
+}
+
+.lf-eyebrow-pill {
+  display: inline-block;
+  background-color: var(--lf-pill-blue-bg);
+  color: var(--lf-blue-text);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 0.4rem 0.95rem;
+  border-radius: 999px;
+}
+
+.lf-hero-heading {
+  font-size: clamp(2.15rem, 4.2vw, 3.35rem);
+  font-weight: 800;
+  line-height: 1.14;
+  letter-spacing: -0.025em;
+  color: #1c1c1c;
+}
+
+.lf-hero-heading .text-accent {
+  color: var(--lf-blue-text);
+}
+
+.lf-search-box {
+  background-color: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(15, 41, 74, 0.08);
+  padding: 1.85rem;
+}
+
+.lf-landing-role-card {
+  background-color: #ffffff;
+  border: 1px solid #d5dce3;
+  border-radius: 12px;
+  padding: 1.5rem 1.75rem;
+  cursor: pointer;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.lf-landing-role-card:hover {
+  border-color: var(--lf-blue);
+  box-shadow: 0 4px 16px rgba(0, 136, 255, 0.08);
+}
+
+/* ---------- Found Item Card (00 & 08) ---------- */
+.lf-found-card {
+  border: 1px solid #a8a8a8;
+  border-radius: 10px;
+  overflow: hidden;
+  background-color: #ffffff;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.lf-found-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.lf-found-card-img-wrap {
+  height: 156px;
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.lf-found-card-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.lf-found-card-body {
+  background-color: var(--lf-sky);
+  padding: 0.85rem 1rem 0.95rem;
+  color: #ffffff;
+}
+
+.lf-found-card-title {
+  font-weight: 700;
+  font-size: 0.92rem;
+  color: #ffffff;
+  margin-bottom: 2px;
+}
+
+.lf-found-card-sub {
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.92);
+  margin-bottom: 0.7rem;
+}
+
+.lf-found-card-pill {
+  display: block;
+  width: 100%;
+  background-color: #ffffff;
+  color: #1f2937;
+  font-size: 0.78rem;
+  font-weight: 500;
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+}
+
+/* ---------- Alur Klaim (00) ---------- */
+.lf-steps-section {
+  background-color: var(--lf-hero-bg);
+  padding: 4rem 0;
+}
+
+.lf-step-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 30px;
+  border-radius: 6px;
+  background-color: var(--lf-pill-blue-bg);
+  color: var(--lf-blue-text);
+  font-weight: 700;
+  font-size: 0.82rem;
+}
+
+/* ---------- Screen 01 Pilih Peran ---------- */
+.lf-role-select-card {
+  background-color: var(--lf-sky);
+  border: 1px solid #7aa6ce;
+  border-radius: 12px;
+  padding: 1.5rem 1.75rem;
+  color: #ffffff;
+  cursor: pointer;
+  transition: filter 0.15s ease;
+}
+
+.lf-role-select-card:hover {
+  filter: brightness(0.97);
+}
+
+.lf-role-select-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background-color: #ffffff;
+  border: 1.5px dashed #b5c6d6;
+  color: #555555;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.35rem;
+  flex-shrink: 0;
+}
+
+/* ---------- Dashboard White Rows inside Sky Panel ---------- */
+.lf-dash-row {
+  background-color: #ffffff;
+  border-radius: 10px;
+  padding: 0.7rem 1rem;
+  color: #1c1c1c;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.lf-dash-row:hover {
+  background-color: #f6f9fc;
+}
+
+.lf-thumb-box {
+  width: 76px;
+  height: 52px;
+  border-radius: 6px;
+  border: 1px solid #a8a8a8;
+  background-color: #ffffff;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.lf-thumb-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.lf-thumb-sq {
+  width: 66px;
+  height: 66px;
+  border-radius: 8px;
+  border: 1px solid #a8a8a8;
+  background-color: #ffffff;
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lf-thumb-sq img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 4px;
+}
+
+.lf-thumb-sq-lg {
+  width: 104px;
+  height: 104px;
+  border-radius: 8px;
+  border: 1px solid #a8a8a8;
+  background-color: #ffffff;
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lf-thumb-sq-lg img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 6px;
+}
+
+/* ---------- Status Pills matching Figma ---------- */
+.lf-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.28rem 1.05rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.lf-pill-yellow {
+  background-color: var(--lf-yellow);
+  color: #1c1c1c;
+}
+
+.lf-pill-green {
+  background-color: var(--lf-green);
+  color: #1c1c1c;
+}
+
+.lf-pill-green-soft {
+  background-color: #8ee0a4;
+  color: #ffffff;
+}
+
+.lf-pill-coral {
+  background-color: var(--lf-coral);
+  color: #1c1c1c;
+}
+
+.lf-pill-white {
+  background-color: #ffffff;
+  border: 1px solid #9a9a9a;
+  color: #1c1c1c;
+}
+
+/* ---------- Inputs & Upload Dropzone ---------- */
+.lf-input {
+  background-color: #ffffff;
+  border: 1px solid #9a9a9a;
+  border-radius: 8px;
+  padding: 0.62rem 0.9rem;
+  font-size: 0.9rem;
+  color: #1c1c1c;
+}
+
+.lf-input:focus {
+  border-color: var(--lf-blue);
+  box-shadow: 0 0 0 3px rgba(0, 136, 255, 0.14);
+}
+
+.lf-upload-box {
+  background-color: #f4f4f4;
+  border: 1.5px dashed #9a9a9a;
+  border-radius: 10px;
+  padding: 2rem 1rem;
+  text-align: center;
+  color: #555555;
+  cursor: pointer;
+}
+
+.lf-upload-box:hover {
+  background-color: #ededed;
+}
+
+/* ---------- Satpam Queue Rows (13) ---------- */
+.lf-satpam-grid-header {
+  display: grid;
+  grid-template-columns: 1fr 1.15fr 164px;
+  gap: 0.75rem;
+  align-items: center;
+  padding: 0 1rem;
+}
+
+.lf-satpam-row {
+  display: grid;
+  grid-template-columns: 1fr 1.15fr 164px;
+  gap: 0.75rem;
+  align-items: center;
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 0.7rem 1rem;
+  color: #1c1c1c;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.lf-satpam-row .lf-pill {
+  width: 100%;
+  padding: 0.3rem 0.75rem;
+  font-size: 0.76rem;
+}
+
+.lf-satpam-row:hover {
+  background-color: #f2f2f2;
+}
+
+.lf-satpam-row.active {
+  background-color: #e0e0e0;
+}
+
+@media (max-width: 575.98px) {
+  .lf-satpam-grid-header {
+    display: none;
+  }
+  .lf-satpam-row {
+    grid-template-columns: 1fr;
+    gap: 0.45rem;
+  }
+  .lf-satpam-row .lf-pill {
+    width: auto;
+  }
+}
+
+/* ---------- Detail Barang Photo Frame (09) ---------- */
+.lf-detail-photo-frame {
+  border: 1px solid #a8a8a8;
+  border-radius: 8px;
+  background-color: #ffffff;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 1.5rem;
+}
+
+.lf-detail-photo-frame img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+/* ---------- White Comparison / Log Box inside Sky Panel ---------- */
+.lf-white-box {
+  background-color: #ffffff;
+  border: 1px solid #9a9a9a;
+  border-radius: 8px;
+  padding: 0.95rem 1.1rem;
+  color: #1c1c1c;
+}
+
+/* ---------- Back Link ---------- */
+.lf-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #555555;
+  font-size: 0.88rem;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.lf-back-link:hover {
+  color: #111111;
+}
+
+/* ---------- Modal Styling (05, 12, 14) ---------- */
+.lf-modal {
+  border-radius: 14px;
+  border: 1px solid #c9c9c9;
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.25);
+}
+
+.lf-modal-danger-title {
+  color: var(--lf-dark-red);
+  font-size: 1.2rem;
+}
+
+.lf-close-box {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  border: 1px solid #9a9a9a;
+  background-color: #ffffff;
+  color: #555555;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.lf-close-box:hover {
+  background-color: #f3f3f3;
+}
+
+/* ---------- History Table inside Sky Panel (16) ---------- */
+.lf-history-table {
+  width: 100%;
+  border-collapse: collapse;
+  color: #ffffff;
+}
+
+.lf-history-table th {
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding: 0.75rem 0.75rem 0.9rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.75);
+}
+
+.lf-history-table td {
+  padding: 0.95rem 0.75rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.65);
+  font-size: 0.88rem;
+  vertical-align: middle;
+}
+
+.lf-history-table tbody tr {
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.lf-history-table tbody tr:hover {
+  background-color: rgba(255, 255, 255, 0.14);
+}

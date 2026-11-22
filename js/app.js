@@ -167,8 +167,8 @@ function renderNavbar() {
   // Screen 00 · Landing Navbar
   if (!appState.currentUser) {
     nav.innerHTML = `
-      <nav class="navbar navbar-expand-lg bg-white py-3">
-        <div class="container">
+      <nav class="navbar navbar-expand-xl bg-white py-3">
+        <div class="container-fluid container-xl">
           ${brandHtml}
           <a class="lf-role-pill" style="cursor:pointer;" onclick="navigate('choose-role')">Masuk</a>
         </div>
@@ -187,19 +187,19 @@ function renderNavbar() {
       { id: 'my-claims', label: 'Status Klaim' }
     ];
     nav.innerHTML = `
-      <nav class="navbar navbar-expand-lg bg-white py-3">
-        <div class="container">
+      <nav class="navbar navbar-expand-xl bg-white py-2 py-md-3">
+        <div class="container-fluid container-xl">
           ${brandHtml}
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="mainNav">
-            <div class="d-flex flex-wrap justify-content-center gap-2 mx-auto my-2 my-lg-0">
+            <div class="d-flex flex-wrap flex-xl-nowrap justify-content-center gap-1 gap-xl-2 mx-auto my-2 my-xl-0">
               ${links.map(l => `
                 <a class="lf-nav-btn ${currentPage === l.id || (l.id === 'found-list' && (currentPage === 'found-detail' || currentPage === 'claim-form')) ? 'active' : ''}" onclick="navigate('${l.id}')">${l.label}</a>
               `).join('')}
             </div>
-            <div class="d-flex align-items-center gap-3">
+            <div class="d-flex align-items-center justify-content-center gap-2 gap-md-3 mt-2 mt-xl-0">
               <span class="lf-role-pill">Mahasiswa</span>
               <span class="lf-avatar-circle" title="${escapeHtml(appState.currentUser.name)}"></span>
               <a class="text-dark text-decoration-none fw-bold small" style="cursor:pointer;" onclick="logout()">Keluar</a>
@@ -218,19 +218,19 @@ function renderNavbar() {
     { id: 'satpam-history', label: 'Riwayat' }
   ];
   nav.innerHTML = `
-    <nav class="navbar navbar-expand-lg bg-white py-3">
-      <div class="container">
+    <nav class="navbar navbar-expand-xl bg-white py-2 py-md-3">
+      <div class="container-fluid container-xl">
         ${brandHtml}
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="mainNav">
-          <div class="d-flex flex-wrap justify-content-center gap-2 mx-auto my-2 my-lg-0">
+          <div class="d-flex flex-wrap flex-xl-nowrap justify-content-center gap-1 gap-xl-2 mx-auto my-2 my-xl-0">
             ${satpamLinks.map(l => `
               <a class="lf-nav-btn ${currentPage === l.id || (l.id === 'satpam-history' && currentPage === 'satpam-history-detail') ? 'active' : ''}" onclick="navigate('${l.id}')">${l.label}</a>
             `).join('')}
           </div>
-          <div class="d-flex align-items-center gap-3">
+          <div class="d-flex align-items-center justify-content-center gap-2 gap-md-3 mt-2 mt-xl-0">
             <span class="lf-role-pill">Satpam</span>
             <span class="lf-avatar-circle" title="${escapeHtml(appState.currentUser.name)}"></span>
             <a class="text-dark text-decoration-none fw-bold small" style="cursor:pointer;" onclick="logout()">Keluar</a>

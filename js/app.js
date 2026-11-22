@@ -1,12 +1,12 @@
 /* =========================================================
-   Lost & Found FILKOM — Frontend SPA Application
+   Lost & Found FILKOM — Frontend Multi-Page Application
    100% Faithful to all 18 Figma High-Fidelity Screens
    ========================================================= */
 
 let appState = loadState();
 
 const uiState = {
-  view: 'landing',
+  view: '',
   selectedFoundId: 'FND-007',
   selectedPendingId: 'PND-001',
   selectedHistoryId: 'LAP-2026-014',
@@ -18,6 +18,36 @@ const uiState = {
   },
   cancelContext: null
 };
+
+// ---------- Page-to-file mapping ----------
+const PAGE_FILES = {
+  'landing': 'landing.html',
+  'choose-role': 'choose-role.html',
+  'login-mahasiswa': 'login-mahasiswa.html',
+  'login-satpam': 'login-satpam.html',
+  'dashboard': 'dashboard.html',
+  'report-lost': 'report-lost.html',
+  'report-found': 'report-found.html',
+  'found-list': 'found-list.html',
+  'found-detail': 'found-detail.html',
+  'claim-form': 'claim-form.html',
+  'my-claims': 'my-claims.html',
+  'satpam-verify': 'satpam-verify.html',
+  'satpam-claims': 'satpam-claims.html',
+  'satpam-history': 'satpam-history.html',
+  'satpam-history-detail': 'satpam-history-detail.html'
+};
+
+// Detect current page from filename
+function getCurrentPage() {
+  const path = window.location.pathname;
+  const filename = path.substring(path.lastIndexOf('/') + 1) || 'index.html';
+  for (const [view, file] of Object.entries(PAGE_FILES)) {
+    if (filename === file) return view;
+  }
+  if (filename === 'index.html' || filename === '') return 'landing';
+  return 'landing';
+}
 
 // ---------- Helpers ----------
 function escapeHtml(str) {
@@ -74,46 +104,49 @@ function showToast(message, variant = 'dark') {
   el.addEventListener('hidden.bs.toast', () => el.remove());
 }
 
-// ---------- Navigation ----------
+// ---------- Navigation (Multi-Page) ----------
 function navigate(view, params = {}) {
-  if (params.foundId) uiState.selectedFoundId = params.foundId;
-  if (params.historyId) uiState.selectedHistoryId = params.historyId;
-  if (params.keyword !== undefined) uiState.filters.keyword = params.keyword;
+  // Save params to sessionStorage so the target page can read them
+  if (params.foundId) sessionStorage.setItem('lf_selectedFoundId', params.foundId);
+  if (params.historyId) sessionStorage.setItem('lf_selectedHistoryId', params.historyId);
+  if (params.keyword !== undefined) sessionStorage.setItem('lf_searchKeyword', params.keyword);
 
   const mahasiswaViews = ['dashboard', 'report-lost', 'report-found', 'claim-form', 'my-claims'];
   const authRequiredViews = ['found-list', 'found-detail'];
   const satpamViews = ['satpam-verify', 'satpam-claims', 'satpam-history', 'satpam-history-detail'];
 
   if (authRequiredViews.includes(view) && !appState.currentUser) {
-    uiState.view = 'choose-role';
-    showToast('Silakan masuk terlebih dahulu untuk melihat barang temuan.');
+    sessionStorage.setItem('lf_toast', 'Silakan masuk terlebih dahulu untuk melihat barang temuan.');
+    window.location.href = 'choose-role.html';
+    return;
   } else if (mahasiswaViews.includes(view) && (!appState.currentUser || appState.currentUser.role !== 'mahasiswa')) {
-    uiState.view = 'login-mahasiswa';
-    showToast('Silakan login sebagai Mahasiswa terlebih dahulu.');
+    sessionStorage.setItem('lf_toast', 'Silakan login sebagai Mahasiswa terlebih dahulu.');
+    window.location.href = 'login-mahasiswa.html';
+    return;
   } else if (satpamViews.includes(view) && (!appState.currentUser || appState.currentUser.role !== 'satpam')) {
-    uiState.view = 'login-satpam';
-    showToast('Silakan login sebagai Satpam terlebih dahulu.');
-  } else {
-    uiState.view = view;
+    sessionStorage.setItem('lf_toast', 'Silakan login sebagai Satpam terlebih dahulu.');
+    window.location.href = 'login-satpam.html';
+    return;
   }
 
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-  renderApp();
+  const targetFile = PAGE_FILES[view] || 'landing.html';
+  window.location.href = targetFile;
 }
 
 function logout() {
   appState.currentUser = null;
   saveState(appState);
-  showToast('Berhasil keluar.');
-  navigate('landing');
+  sessionStorage.setItem('lf_toast', 'Berhasil keluar.');
+  window.location.href = 'landing.html';
 }
 
 // ---------- Navbar ----------
 function renderNavbar() {
   const nav = document.getElementById('app-navbar');
+  const currentPage = getCurrentPage();
   const authViews = ['choose-role', 'login-mahasiswa', 'login-satpam'];
 
-  if (authViews.includes(uiState.view)) {
+  if (authViews.includes(currentPage)) {
     nav.innerHTML = '';
     nav.classList.add('d-none');
     return;
@@ -163,7 +196,7 @@ function renderNavbar() {
           <div class="collapse navbar-collapse" id="mainNav">
             <div class="d-flex flex-wrap justify-content-center gap-2 mx-auto my-2 my-lg-0">
               ${links.map(l => `
-                <a class="lf-nav-btn ${uiState.view === l.id || (l.id === 'found-list' && (uiState.view === 'found-detail' || uiState.view === 'claim-form')) ? 'active' : ''}" onclick="navigate('${l.id}')">${l.label}</a>
+                <a class="lf-nav-btn ${currentPage === l.id || (l.id === 'found-list' && (currentPage === 'found-detail' || currentPage === 'claim-form')) ? 'active' : ''}" onclick="navigate('${l.id}')">${l.label}</a>
               `).join('')}
             </div>
             <div class="d-flex align-items-center gap-3">
@@ -194,7 +227,7 @@ function renderNavbar() {
         <div class="collapse navbar-collapse" id="mainNav">
           <div class="d-flex flex-wrap justify-content-center gap-2 mx-auto my-2 my-lg-0">
             ${satpamLinks.map(l => `
-              <a class="lf-nav-btn ${uiState.view === l.id || (l.id === 'satpam-history' && uiState.view === 'satpam-history-detail') ? 'active' : ''}" onclick="navigate('${l.id}')">${l.label}</a>
+              <a class="lf-nav-btn ${currentPage === l.id || (l.id === 'satpam-history' && currentPage === 'satpam-history-detail') ? 'active' : ''}" onclick="navigate('${l.id}')">${l.label}</a>
             `).join('')}
           </div>
           <div class="d-flex align-items-center gap-3">
@@ -1236,8 +1269,8 @@ function renderSatpamHistoryDetail() {
 function quickLoginMahasiswa() {
   appState.currentUser = { role: 'mahasiswa', name: 'Reyhan Setya', id: '255150207111078' };
   saveState(appState);
-  showToast('Berhasil masuk sebagai Mahasiswa!', 'success');
-  navigate('dashboard');
+  sessionStorage.setItem('lf_toast', 'Berhasil masuk sebagai Mahasiswa!|success');
+  window.location.href = 'dashboard.html';
 }
 
 function handleNotificationClick(notifId) {
@@ -1275,7 +1308,6 @@ function handleNotificationClick(notifId) {
   };
 
   new bootstrap.Modal(document.getElementById('modalMatchDetail')).show();
-  renderApp();
 }
 
 function openCancelModal(type, id) {
@@ -1299,12 +1331,12 @@ document.getElementById('btnConfirmCancelAction').addEventListener('click', () =
   }
   saveState(appState);
   bootstrap.Modal.getInstance(document.getElementById('modalCancelConfirm')).hide();
-  renderApp();
+  renderPage();
 });
 
 function selectPendingReport(id) {
   uiState.selectedPendingId = id;
-  renderApp();
+  renderPage();
 }
 
 function verifyAndSaveFound(pendingId) {
@@ -1335,7 +1367,7 @@ function verifyAndSaveFound(pendingId) {
 
   saveState(appState);
   showToast(`"${item.name}" diverifikasi & disimpan di ${item.reception}.`, 'success');
-  renderApp();
+  renderPage();
 }
 
 let rejectPendingTargetId = null;
@@ -1388,7 +1420,7 @@ document.getElementById('btnConfirmRejectFound').addEventListener('click', () =>
     showToast(`Laporan "${item.name}" telah ditolak.`, 'danger');
   }
   bootstrap.Modal.getInstance(document.getElementById('modalRejectFound')).hide();
-  renderApp();
+  renderPage();
 });
 
 function updateSatpamClaim(id, newStatus) {
@@ -1397,7 +1429,7 @@ function updateSatpamClaim(id, newStatus) {
   c.status = newStatus;
   saveState(appState);
   showToast(`Klaim "${c.itemName}" diubah menjadi ${newStatus}.`, newStatus === 'Disetujui' ? 'success' : 'danger');
-  renderApp();
+  renderPage();
 }
 
 function completeSatpamHandover(id) {
@@ -1433,12 +1465,12 @@ function completeSatpamHandover(id) {
   });
   saveState(appState);
   showToast(`"${c.itemName}" telah diserahkan & masuk ke Riwayat.`, 'success');
-  renderApp();
+  renderPage();
 }
 
 function resetFilters() {
   uiState.filters = { keyword: '', category: 'Semua', location: 'Semua', date: '' };
-  renderApp();
+  renderPage();
 }
 
 // ---------- Bind Events ----------
@@ -1458,8 +1490,8 @@ function bindViewEvents() {
       e.preventDefault();
       appState.currentUser = { role: 'mahasiswa', name: 'Reyhan Setya', id: '255150207111078' };
       saveState(appState);
-      showToast('Berhasil masuk sebagai Mahasiswa!', 'success');
-      navigate('dashboard');
+      sessionStorage.setItem('lf_toast', 'Berhasil masuk sebagai Mahasiswa!|success');
+      window.location.href = 'dashboard.html';
     });
   }
 
@@ -1469,8 +1501,8 @@ function bindViewEvents() {
       e.preventDefault();
       appState.currentUser = { role: 'satpam', name: 'Ariq Dwi Anugrah', id: 'SATPAM-02' };
       saveState(appState);
-      showToast('Berhasil masuk sebagai Satpam!', 'success');
-      navigate('satpam-verify');
+      sessionStorage.setItem('lf_toast', 'Berhasil masuk sebagai Satpam!|success');
+      window.location.href = 'satpam-verify.html';
     });
   }
 
@@ -1492,8 +1524,8 @@ function bindViewEvents() {
         status: 'Dicari'
       });
       saveState(appState);
-      showToast('Laporan kehilangan berhasil dikirim!', 'success');
-      navigate('dashboard');
+      sessionStorage.setItem('lf_toast', 'Laporan kehilangan berhasil dikirim!|success');
+      window.location.href = 'dashboard.html';
     });
   }
 
@@ -1531,8 +1563,8 @@ function bindViewEvents() {
         image: uploadedDataUrl || 'assets/botol-minum.png'
       });
       saveState(appState);
-      showToast('Laporan temuan berhasil dikirim! Menunggu verifikasi Satpam.', 'success');
-      navigate('dashboard');
+      sessionStorage.setItem('lf_toast', 'Laporan temuan berhasil dikirim! Menunggu verifikasi Satpam.|success');
+      window.location.href = 'dashboard.html';
     });
   }
 
@@ -1543,7 +1575,7 @@ function bindViewEvents() {
       uiState.filters.category = document.getElementById('filterCategory').value;
       uiState.filters.location = document.getElementById('filterLocation').value;
       uiState.filters.date = document.getElementById('filterDate').value;
-      renderApp();
+      renderPage();
     });
   }
 
@@ -1582,16 +1614,28 @@ function bindViewEvents() {
         status: 'Diajukan'
       });
       saveState(appState);
-      showToast('Klaim berhasil dikirim!', 'success');
-      navigate('my-claims');
+      sessionStorage.setItem('lf_toast', 'Klaim berhasil dikirim!|success');
+      window.location.href = 'my-claims.html';
     });
   }
 }
 
-// ---------- Main Render ----------
-function renderApp() {
+// ---------- Main Render for current page ----------
+function renderPage() {
   renderNavbar();
   const main = document.getElementById('app-main');
+  const currentPage = getCurrentPage();
+
+  // Restore params from sessionStorage
+  const savedFoundId = sessionStorage.getItem('lf_selectedFoundId');
+  if (savedFoundId) uiState.selectedFoundId = savedFoundId;
+  const savedHistoryId = sessionStorage.getItem('lf_selectedHistoryId');
+  if (savedHistoryId) uiState.selectedHistoryId = savedHistoryId;
+  const savedKeyword = sessionStorage.getItem('lf_searchKeyword');
+  if (savedKeyword) {
+    uiState.filters.keyword = savedKeyword;
+    sessionStorage.removeItem('lf_searchKeyword');
+  }
 
   const views = {
     'landing': renderLanding,
@@ -1611,14 +1655,23 @@ function renderApp() {
     'satpam-history-detail': renderSatpamHistoryDetail
   };
 
-  main.innerHTML = (views[uiState.view] || renderLanding)();
+  main.innerHTML = (views[currentPage] || renderLanding)();
   bindViewEvents();
 }
 
 window.resetDemo = function () {
   appState = resetDemoState();
-  showToast('Data demo dikembalikan ke kondisi awal.');
-  navigate('landing');
+  sessionStorage.setItem('lf_toast', 'Data demo dikembalikan ke kondisi awal.');
+  window.location.href = 'landing.html';
 };
 
-document.addEventListener('DOMContentLoaded', renderApp);
+document.addEventListener('DOMContentLoaded', () => {
+  // Show any pending toast from navigation
+  const pendingToast = sessionStorage.getItem('lf_toast');
+  if (pendingToast) {
+    sessionStorage.removeItem('lf_toast');
+    const parts = pendingToast.split('|');
+    showToast(parts[0], parts[1] || 'dark');
+  }
+  renderPage();
+});
